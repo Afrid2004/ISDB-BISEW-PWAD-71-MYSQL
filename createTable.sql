@@ -7,14 +7,14 @@ mysql -u root -p
 show databases
 
 -- create database
-create DATABASE batch71;
+CREATE DATABASE batch71;
 
 -- select batch71 table from cmd
 use batch71
 
 
 -- create table into batch71 database
-create table students(
+CREATE TABLE students(
     id int primary key auto_increment,
     name varchar(255),
     email varchar(100),
@@ -26,7 +26,7 @@ create table students(
 describe students
 
 --create another table schools in batch71 db
-create table schools(
+CREATE TABLE schools(
     id int primary key auto_increment,
     name varchar(150),
     email varchar(150),
@@ -38,15 +38,15 @@ create table schools(
 describe schools
 
 --insert data into table
-insert into schools(name, email, phone, address) 
-values
+INSERT INTO schools(name, email, phone, address) 
+VALUES
 ("Jashore Polytechnic Institute", "abc@gmail.com", "0000-111-22", "Jashore"),
 ("Dhaka Polytechnic Institute", "abcd@gmail.com", "0000-111-22", "Dhaka"),
 ("Chandpur Polytechnic Institute", "abcd@gmail.com", "0000-111-22", "Chandpur");
 ("Feni Polytechnic Institute", "abcd@gmail.com", "0000-111-22", "Feni");
 
 -- new table employees
-create table employees(
+CREATE TABLE employees(
     id int primary key auto_increment,
     name varchar(100),
     designation varchar(50),
@@ -59,7 +59,7 @@ create table employees(
 );
 
 -- insert data
-insert into employees (name, designation, department, basic_salary, sales_amount,commission_rate, promotion_date, joining_date) value ("Rahim Uddin", "Sales Executive", "Sales", 30000.00, 120000.00, 5.00, "2024-06-15", "2022-01-10"),
+INSERT INTO employees (name, designation, department, basic_salary, sales_amount,commission_rate, promotion_date, joining_date) VALUES ("Rahim Uddin", "Sales Executive", "Sales", 30000.00, 120000.00, 5.00, "2024-06-15", "2022-01-10"),
 ("Karim Mia", "Manager", "Sales", 50000.00, 200000.00, 7.50, "2023-03-20", "2021-05-12"),
 ("Sadia Akter", "HR Officer", "HR", 35000.00, 0.00, 0.00, "2024-01-01", "2022-09-01"),
 ("Nusrat Jahan", "Sales Executive", "Sales", 28000.00, 90000.00, 4.50, "2024-07-10", "2023-02-18"),
@@ -75,3 +75,25 @@ mysqldump -u root -p batch71 > backup.sql
 
 -- for import first of all create database batch71
 mysql -u root -p batch71 < backup.sql 
+
+--show all data
+SELECT * FROM employees;
+
+--alias means rename column name for only show
+SELECT name, basic_salary AS salary FROM employees;
+--or
+SELECT name, basic_salary salary FROM employees;
+
+--showing specific data like name designation
+SELECT name, basic_salary, designation FROM employees;
+
+--where department = sales
+SELECT name, basic_salary, designation FROM employees  
+WHERE department = "Sales";
+
+--where departement = sales and salary >= 30000
+SELECT name, basic_salary, designation FROM employees  
+WHERE department = "Sales" AND basic_salary>=30000;
+
+-- get total amount of all employees salary (for renaming used alais total)
+SELECT sum(basic_salary) AS total FROM employees;
