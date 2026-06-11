@@ -9,6 +9,6 @@ try {
 }
 
 //select table and fetch the data from students table using query
-$data = $db->query("SELECT * FROM students");
-//get data in assosiative array format
-$students = $data->fetch_all(MYSQLI_ASSOC);
+// $data = $db->query("SELECT * FROM students");
+// //get data in assosiative array format
+// $students = $data->fetch_all(MYSQLI_ASSOC);

@@ -1,37 +1,46 @@
 <?php
-session_start();
-if (!isset($_SESSION["name"])) {
-    header("location:logout.php");
-    exit();
-}
-$name = $_SESSION['name'];
-$id = $_SESSION['id'];
-
+include_once("layouts/Header.php");
+include_once("Task-oop.php");
+include_once("db_config.php");
+//get all data 
+$allTasks = TASKOOP::showAll($_SESSION['id']);
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-
-<body>
-    <div class="container">
-        <header>
-            <nav>
-                <div class="d-flex align-items-center justify-content-between py-2">
-                    <div>
-                        <p class="mb-0">Wellcome! <?php echo "{$name}, id: {$id}" ?></p>
-                    </div>
-                    <div><button class="btn btn-sm btn-dark" onclick="window.location.href='logout.php'">Logout</button></div>
-                </div>
-            </nav>
-        </header>
+<main>
+    <div class="py-5">
+        <div>
+            <h4>All Data</h4>
+            <table class="table table-striped border">
+                <thead>
+                    <tr>
+                        <th scope="col">Sl.</th>
+                        <th scope="col">Task name</th>
+                        <th scope="col">Tasc Description</th>
+                        <th scope="col">Task Time</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($allTasks as $task) {
+                        $formattedTime = date('h:i A', strtotime($task->task_time));
+                        echo "
+                            <tr>
+                                <th>{$task->id}</th>
+                                <td>{$task->task_name}</td>
+                                <td>{$task->task_desc}</td>
+                                <td>{$formattedTime}</td>
+                                <td><button class='btn btn-warning btn-sm'>Edit</button></td>
+                            </tr>
+                        ";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
+</main>
+</div>
 </body>
 
 </html>
