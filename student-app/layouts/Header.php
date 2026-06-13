@@ -25,12 +25,12 @@ $id = $_SESSION['id'];
             <nav>
                 <div class="d-flex align-items-center justify-content-between py-2">
                     <div>
-                        <p class="mb-0">Wellcome! <?php echo "{$name}, id: {$id}" ?></p>
+                        <p class="mb-0">Wellcome! <?php echo "{$name}, Student id: {$id}" ?></p>
                     </div>
                     <div>
-                        <a class="btn btn-sm btn-primary" href="./">Home</a>
-                        <a class="btn btn-sm btn-primary" href="./create-task.php">Create Task</a>
-                        <button class="btn btn-sm btn-dark" onclick="window.location.href='logout.php'">Logout</button>
+                        <a class="btn btn-primary" href="./">Home</a>
+                        <a class="btn btn-primary" href="./create-task.php">Create Task</a>
+                        <button class="btn btn-dark" onclick="window.location.href='logout.php'">Logout</button>
                     </div>
                 </div>
             </nav>
