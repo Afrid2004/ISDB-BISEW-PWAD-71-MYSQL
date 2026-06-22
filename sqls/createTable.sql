@@ -9,7 +9,7 @@ show databases
 -- create database
 CREATE DATABASE batch71;
 
--- select batch71 table from cmd
+-- select batch71 Database from cmd
 use batch71
 
 
@@ -97,3 +97,115 @@ WHERE department = "Sales" AND basic_salary>=30000;
 
 -- get total amount of all employees salary (for renaming used alais total)
 SELECT sum(basic_salary) AS total FROM employees;
+
+
+-- create database
+CREATE DATABASE HMS;
+
+-- to delete database
+DROP DATABASE IF EXISTS HMS;
+
+-- delete all data of vendor table un can add data 
+TRUNCATE TABLE vendor;
+
+-- rename table name
+RENAME TABLE vendor TO doctor;
+
+
+-- aggregate function 
+SELECT count(*) FROM students WHERE age>20;
+
+-- limit data
+SELECT * FROM students LIMIT 20;
+
+-- limit data and skip data
+SELECT * FROM students LIMIT 20 OFFSET 10;
+
+-- find data by name wher e a exist in last
+SELECT * FROM students WHERE name LIKE "%a";
+
+-- find data using condition
+SELECT * FROM students WHERE class=9 OR class=12;
+
+-- sort data 
+SELECT * FROM students WHERE class=9 OR class=12 
+ORDER BY class DESC;
+select * from students ORDER BY age ASC LIMIT 10;
+
+-- check where email is null
+SELECT * FROM students WHERE email IS NULL;
+
+-- subQuery 
+select * from students 
+WHERE class=11 AND age=(
+	SELECT MIN(age) FROM students WHERE class=11
+);
+
+-- get the unique class romve the duplicate data
+SELECT DISTINCT class FROM students 
+
+-- create a group
+SELECT class, count(*) as total 
+FROM students 
+GROUP BY class;
+
+-- having works like where
+SELECT class, count(*) as total FROM students 
+group by class having count(*) > 15
+
+-- prodedure work like function 
+-- insert data
+DELIMITER $$
+
+CREATE PROCEDURE addStudent(
+    IN student_name VARCHAR(100),
+    IN student_class VARCHAR(20),
+    IN student_marks INT
+)
+BEGIN
+    INSERT INTO students(name, class, marks)
+    VALUES(student_name, student_class, student_marks);
+END $$
+
+DELIMITER ;
+
+-- call it 
+CALL addStudent('Hasan', 'Eight', 75);
+
+SELECT * FROM role;
+
+DROP PROCEDURE IF EXISTS deleteRole;
+DELIMITER $$
+CREATE PROCEDURE deleteRole(IN role_id INT)
+BEGIN
+    DELETE FROM role
+    WHERE id = role_id;
+END $$
+
+DELIMITER ;
+
+-- calling function
+CALL deleteRole(15);
+
+
+--view works as a virtual table
+SELECT * FROM role;
+
+CREATE VIEW roles AS 
+SELECT * FROM role;
+
+SELECT * FROM roles;
+
+-- trigger
+DELIMITER $$
+
+CREATE TRIGGER after_studentinfo_insert
+AFTER INSERT ON students_info
+FOR EACH ROW
+BEGIN
+    UPDATE students
+    SET updated_at = NOW()
+    WHERE id = NEW.student_id;
+END $$
+
+DELIMITER ;
