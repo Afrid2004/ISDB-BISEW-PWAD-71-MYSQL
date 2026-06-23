@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <title>All Students</title>
+  </head>
+  <body>
+    <div class="bg-light">
+      <div class="container">
+        <div class="py-5">
+          <h1 class="mb-3">All students</h1>
+          <div class="bg-white p-4 rounded-4 shadow-sm">
+            <table class="table table-striped border">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Class</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody id="studentData"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let studentData = document.getElementById("studentData"),
+        html = "";
+
+      const getAllStudentData = () => {
+        fetch("http://localhost/ISDB-BISEW-PWAD-71-MYSQL/api/role.php")
+          .then((res) => res.json())
+          .then((data) => {
+            data.students.forEach((student, i) => {
+            i++;
+              html += `
+                <tr>
+                  <td>${i}</td>
+                  <td>${student.name}</td>
+                  <td>${student.email}</td>
+                  <td>${student.age}</td>
+                  <td>${student.class}</td>
+                  <td>
+                    <div>
+                        <button class="btn btn-warning"><i class="bi bi-pencil-square"></i> Edit</button>
+                        <button class="btn btn-dark">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+                `;
+            });
+            studentData.innerHTML = html;
+
+
+          })
+          .catch((err) => console.log(err));
+      };
+
+      getAllStudentData();
+    </script>
+  </body>
+</html>
