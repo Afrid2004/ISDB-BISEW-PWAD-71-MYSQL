@@ -17,19 +17,18 @@ class Company
     {
     }
 
-    public function set($name, $email, $country_id, $road, $phone, $district_id, $created_at){
+    public function set($name, $email, $country_id, $road, $phone, $district_id){
         $this->name = $name;
         $this->email = $email;
         $this->country_id = $country_id;
         $this->road = $road;
         $this->phone = $phone;
         $this->district_id = $district_id;
-        $this->created_at = $created_at;
     }
 
     public function createCompany(){
         global $db;
-        $sql = "INSERT INTO allcompany (id, name, email, country_id, road, phone, district_id, created_at) VALUES ('$this->id', '$this->name', '$this->email', '$this->country_id', '$this->road', '$this->phone', '$this->district_id', '$this->created_at')";
+        $sql = "INSERT INTO allcompany (name, email, country_id, road, phone, district_id) VALUES ('$this->name', '$this->email', '$this->country_id', '$this->road', '$this->phone', '$this->district_id')";
         $stmt = $db->query($sql);
         if($stmt){
             return $db->insert_id;
